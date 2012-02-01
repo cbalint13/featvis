@@ -1,0 +1,77 @@
+
+
+                 -~==  FeatVIS  ==~-
+           (Feature Vector Visualisation)
+
+
+Compile:
+========
+   Requirements:
+       - OpenSceneGraph - http://www.openscenegraph.org/projects/osg
+       - FLANN - http://www.cs.ubc.ca/~mariusm/index.php/FLANN/FLANN
+       - GSL - http://www.gnu.org/software/gsl
+       - HDF4 - http://www.hdfgroup.org/products/hdf4
+       - GTK2+ - http://www.gtk.org
+       - GTKGLEXT - http://projects.gnome.org/gtkglext
+       - FFTW3 - http://www.fftw.org/ (Only for GIST extractor demo tool)
+
+   Compilation:
+
+       * On UNIX, Linux, MacOSX use cmake:
+          1) cmake .
+          2) make
+          3) see bin/ folder for binary results.
+
+
+Folders:
+========
+
+
+bin/
+   featmatrix*
+      - tool that compute euclid distance matrix.
+      - .tif optionaly can viewed in e.g. QGIS (use PseudoColor mapping).
+      - INP: needs a HDF4 dataset as vectors to be processed.
+      - OUT: .tif file in (float) mode
+
+   featmds*
+      - tool that compute multi dimensional scaling in 2D/3D using eigens.
+      - INP: requires the .tif distance matrix set
+      - OUT: update the initial HDF4 dataset of vectors in new Vset table.
+
+   vsegment*
+      - tool that fast label clustered vectors
+      - compute cluster centers and histograms of clusters
+      - INP: the HDF4 set with vector set
+      - OUT: updates the same HDF4 set with cluster, add label indexes
+
+   visvect*
+      - tool that visualise a navigable 2D/3D space (openSceneGraph)
+      - INP: the HDF4 dataset holding sets: (vectors, labelsidx, imagespath)
+      - OUT: Display.
+
+   findgist* (SAMPLE)
+      - SAMPLE tool that computes GIST vectors for collections of image.
+      - INP: image file
+      - OUT: create/insert in HDF4 file vectors and images path
+
+samples/
+     - example scripts for tool usage
+     - images collection to test
+
+
+USAGE:
+======
+  - see samples/ folder, follow small scripts.
+
+HDF4 Data Input:
+================
+
+  - HDF4 must be prepared as follows:
+        * Create a VSdata type dataset labeled "Feature Vectors" with two collumns: "image" and "feature".
+        * "image" one dimensional [64 * CHAR type] should hold image file name.
+        * "feature" N dimensional [N * FLOAT32 type] should hold vector derived from image.
+     ** See samples/ folder, step 1 produce such an initial HDF4 dataset.
+
+
+
