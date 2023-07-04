@@ -7,6 +7,7 @@ End to end example of the work flow on a large collection of images.
 
 ```
 $ ./1-gist-extract.sh
+{...}
 Exec: [findgist images/mountain_natu756.jpg -o vectors-gist.hdf]
 Load raster file: images/mountain_natu756.jpg
            image: (256P x 256L) pixels
@@ -46,8 +47,6 @@ Building tree...
 Input similarities computed in 26.25 seconds (sparsity = 0.166496)!
 Learning embedding...
 Iteration 50: error is 65.613757 (50 iterations in 6.05 seconds)
-{...}
-{...}
 {...}
 Iteration 4999: error is 1.139133 (50 iterations in 4.57 seconds)
 Fitting performed in 426.09 seconds.
