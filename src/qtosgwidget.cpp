@@ -64,9 +64,11 @@ osg::Geode *QtOSGWidget::createAxis(
   geode->getOrCreateStateSet()->setAttributeAndModes(
     linewidth, osg::StateAttribute::ON);
   // axis cones
-  auto xcone = new osg::Cone(osg::Vec3(BBox.xMax(), 0.0f, 0.0f), .5f, 1.f);
-  auto ycone = new osg::Cone(osg::Vec3(0.0f, BBox.yMax(), 0.0f), .5f, 1.f);
-  auto zcone = new osg::Cone(osg::Vec3(0.0f, 0.0f, BBox.zMax()), .5f, 1.f);
+  float dia = abs(BBox.xMax() / 20.f);
+  float arr = abs(BBox.xMax() / 10.f);
+  auto xcone = new osg::Cone(osg::Vec3(BBox.xMax(), 0.0f, 0.0f), dia, arr);
+  auto ycone = new osg::Cone(osg::Vec3(0.0f, BBox.yMax(), 0.0f), dia, arr);
+  auto zcone = new osg::Cone(osg::Vec3(0.0f, 0.0f, BBox.zMax()), dia, arr);
   xcone->setRotation(
     osg::Quat(osg::DegreesToRadians(0.0f), osg::Vec3(1, 0, 0),
               osg::DegreesToRadians(90.f), osg::Vec3(0, 1, 0),

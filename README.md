@@ -16,8 +16,8 @@ Currently implements and use:
  * [BH-TSNE](http://lvdmaaten.github.io/publications/papers/JMLR_2014.pdf) (space partitioning) for embedding projections in low-dim (3D)
  * [FLANN](https://github.com/flann-lib/flann) (fast knn) clustering and nearest neighbouring
 
-![VIEW](docs/images/featvis-view.png)
+![VIEW](docs/images/featvis-view.gif)
 
 ## Docs
-  
+
   Follow the steps and explanations in the [sample](/sample) folder.

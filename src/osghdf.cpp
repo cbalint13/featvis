@@ -225,7 +225,7 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename, QProgressBar *pg
     // create one vertex and one color
     vertices->push_back( osg::Vec3( x[i], y[i], z[i] ) );
     colors->push_back( osg::Vec4( 1.0f, 1.0f, 1.0f, 1.0f ) );
-    //colors->push_back( osg::Vec4(R[l[i]], G[l[i]], B[l[i]], 1.0f) );
+    colors->push_back( osg::Vec4(R[l[i]], G[l[i]], B[l[i]], 1.0f) );
     // add the vertex and its color to a geode
     geometries->setVertexArray(vertices);
     geometries->setColorArray(colors);
