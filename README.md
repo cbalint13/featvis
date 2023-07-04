@@ -4,7 +4,7 @@
 
 FeatVIS helps visualize multidimensional features space.
 
-GUI is written using QT + OpenSceneGraph with performance & simplicity in mind.
+GUI is written using QT + OpenSceneGraph with simplicity in mind.
 
 ## Specs
 
