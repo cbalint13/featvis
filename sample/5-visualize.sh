@@ -2,6 +2,6 @@
 
 # Visualise DATA
 
-cd images/
-../../bin/featvis ../vectors-gist.hdf
-cd ..
+#cd images/
+../bin/featvis -i `pwd`/vectors-gist.hdf
+#cd ..

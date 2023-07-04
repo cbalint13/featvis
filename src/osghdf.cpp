@@ -1,9 +1,15 @@
-#include "featvis.h"
+/*
+ * License: GPLv3
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ *
+ * Copyright 2012, 2023
+ *       Cristian Balint < cristian dot balint at gmail dot com >
+ */
 
 #include "hdf.h"
 #include "vg.h"
 
-#include "osggtk.h"
+#include <QtWidgets/QProgressBar>
 
 #include <osg/BlendFunc>
 #include <osg/StateAttribute>
@@ -13,9 +19,13 @@
 #include <osg/TexEnv>
 #include <osg/PointSprite>
 #include <osgDB/ReadFile>
+#include <osgDB/FileNameUtils>
 
 
-osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
+#include "featvis.h"
+
+
+osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename, QProgressBar *pgBar = NULL) {
 
   char    vdata_name[32];
   char    fields[60];
@@ -49,6 +59,11 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
    */
   vdata_ref = -1;
   vdata_ref = VSfind(file_id, "Feature Vectors\0");
+
+  if(!vdata_ref) {
+    std::cout << "ERROR: [Feature Vectors] is not computed." << vdata_ref << std::endl;
+    return NULL;
+  }
 
   /* Attach to the first Vdata in read mode. */
   vdata = VSattach(file_id, vdata_ref, "r");
@@ -89,6 +104,12 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
    */
   vdata_ref = -1;
   vdata_ref = VSfind(file_id, "Feature MDscale\0");
+
+  if(!vdata_ref) {
+    std::cout << "ERROR: [Feature MDscale] is not computed." << vdata_ref << std::endl;
+    return NULL;
+  }
+
   /* Attach to the first Vdata in read mode. */
   vdata = VSattach(file_id, vdata_ref, "r");
   for (i=0; i<60; i++) {
@@ -121,13 +142,18 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
   }
 
 
-
   /*
    * Get the reference number CENTERS
    * the file.
    */
   vdata_ref = -1;
   vdata_ref = VSfind(file_id, "Feature Center Vectors\0");
+
+  if(!vdata_ref) {
+    std::cout << "ERROR: [Feature Center Vectors] is not computed." << vdata_ref << std::endl;
+    return NULL;
+  }
+
   /* Attach to the first Vdata in read mode. */
   vdata = VSattach(file_id, vdata_ref, "r");
   for (i=0; i<60; i++) {
@@ -144,6 +170,12 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
    */
   vdata_ref = -1;
   vdata_ref = VSfind(file_id, "Feature Vector Labels\0");
+
+  if(!vdata_ref) {
+    std::cout << "ERROR: [Feature Vector Labels] is not computed." << vdata_ref << std::endl;
+    return NULL;
+  }
+
   /* Attach to the first Vdata in read mode. */
   vdata = VSattach(file_id, vdata_ref, "r");
   for (i=0; i<60; i++) {
@@ -221,8 +253,16 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
     // TODO: add selectable path to images
     // TODO: if images not found fall to colorized sprites
     sprintf(Filename, "%s", (char *)&images[i*64]);
+    std::string fileFullPath = osgDB::getFilePath(InFilename) + "/" + Filename;
 
-    osg::ref_ptr<osg::Image> image = osgDB::readImageFile( Filename );
+    osg::ref_ptr<osg::Image> image = osgDB::readImageFile(fileFullPath);
+    if(!image) {
+      std::cout << "ERROR: Cannot load image: " << fileFullPath << std::endl;
+      return NULL;
+    }
+
+    pgBar->setValue((100.f / n_labels) * (i + 1));
+
     image->scaleImage(64,64,1);
     texture->setImage(image.get());
     texture->setBorderWidth(1);
@@ -235,7 +275,6 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
 
     // add as a child to ROOT group
     root->addChild(geode);
-
   }
 
   /* Detach from the Vdata, close the interface and the file. */
@@ -248,5 +287,4 @@ osg::ref_ptr<osg::Group> LoadMDSHDFVset(const char *InFilename) {
   free(images);
 
   return root;
-
 }
