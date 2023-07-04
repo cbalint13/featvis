@@ -32,7 +32,7 @@ Save distance matrix band in file: dmatrix-random.tif
            total: 26273 milliseconds
 ```
 
-3. Decompose distance matrix to manifold by MDS (using eigen or bh-tsne)
+3. Decompose distance matrix to manifold by MDS (using **eigen** or **bh-tsne**)
 ```
 $ ./3-mds-cartesian.sh
 Load HDF data from file: vectors-gist.hdf
@@ -56,7 +56,7 @@ Create HDF data in file: vectors-gist.hdf
            total: 464240 milliseconds
 ```
 
-4. Segment the dataset into arbitrary classess.
+4. Sement the dataset into arbitrary classes.
 ```
 $ ./4-segment-flann.sh
 Load HDF data from file: vectors-gist.hdf
@@ -85,7 +85,7 @@ Create HDF data in file: vectors-gist.hdf
            fresh: HDF Vdata for Vector Labels
 ```
 
-5. Visualize the maifold of image sprites in 3D.
+5. Visualize the manifold space with the image sprites in 3D.
 ```
 $ 5-visualize.sh
 ```
