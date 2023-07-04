@@ -20,4 +20,4 @@ Currently implements and use:
 
 ## Docs
   
-  Follow the steps and explanations in the **sample** folder.
+  Follow the steps and explanations in the [sample](/sample) folder.
