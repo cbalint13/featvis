@@ -14,3 +14,7 @@ Currently implements and use:
  * [FLANN](https://github.com/flann-lib/flann) (fast knn) clustering and nearest neighbouring
 
 ![VIEW](docs/images/featvis-view.png)
+
+## Docs
+  
+  Follow the steps and explanations in the **sample** folder.
